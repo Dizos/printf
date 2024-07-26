@@ -1,0 +1,1 @@
+This projec was aimed at teaching us how to collaborate as Software Engineers, and create our own printf man function called _printf. It constitute of 16 tasks. People involved in this project are listed in the contributors tab (Tando Mjekula aka Dizos and Thandeka Mavundla aka Thandeka325)
