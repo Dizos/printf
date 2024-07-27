@@ -10,8 +10,7 @@
 int _printf(const char *format, ...);
 int _putchar(char c);
 
-
-/* Helper functions to help function print char, string and pecentage */
+/* Function prototypes */
 int print_char(va_list args);
 int print_string(va_list args);
 

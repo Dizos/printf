@@ -32,7 +32,6 @@ int print_string(va_list args)
 	}
 	return (count);
 }
-
 /**
  * _printf - Produces output according to a format.
  * @format: Character string containing the format.
@@ -41,39 +40,37 @@ int print_string(va_list args)
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int count = 0, i = 0;
+	int count = 0;
+	int i;
 
 	va_start(args, format);
 
 	if (!format)
 		return (-1);
 
-	while (format && format[i])
+	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (format[i] == '%')
 		{
 			i++;
-			switch (format[i])
+			if (format[i] == '\0')
+				break;
+			if (format[i] == 'c')
+				count += print_char(args);
+			else if (format[i] == 's')
+				count += print_string(args);
+			else if (format[i] == '%')
+				count += _putchar('%');
+			else
 			{
-				case 'c':
-					count += print_char(args);
-					break;
-				case 's':
-					count += print_string(args);
-					break;
-				case '%':
-					count += _putchar('%');
-					count += _putchar(format[i]);
-					break;
+				count += _putchar('%');
 			}
 		}
 		else
 		{
 			count += _putchar(format[i]);
 		}
-		i++;
 	}
-
 	va_end(args);
 	return (count);
 }
