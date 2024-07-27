@@ -41,39 +41,39 @@ int print_string(va_list args)
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int count = 0;
-	int i;
+	int count = 0, i = 0;
 
 	va_start(args, format);
 
 	if (!format)
 		return (-1);
 
-	for (i = 0; format[i] != '\0'; i++)
+	while (format && format[i])
 	{
 		if (format[i] == '%')
 		{
 			i++;
-			if (format[i] == '\0')
-				break;
-			if (format[i] == 'c')
-				count += print_char(args);
-			else if (format[i] == 's')
-				count += print_string(args);
-			else if (format[i] == '%')
-				count += _putchar('%');
-			else
+			switch (format[i])
 			{
-				count += _putchar('%');
-				count += _putchar(format[i]);
+				case 'c':
+					count += print_char(args);
+					break;
+				case 's':
+					count += print_string(args);
+					break;
+				case '%':
+					count += _putchar('%');
+					count += _putchar(format[i]);
+					break;
 			}
 		}
 		else
 		{
 			count += _putchar(format[i]);
 		}
+		i++;
 	}
-	_putchar(-1);
+
 	va_end(args);
 	return (count);
 }
