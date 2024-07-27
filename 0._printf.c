@@ -23,7 +23,7 @@ int print_string(va_list args)
 	int count = 0;
 
 	if (!str)
-		str = "(null(";
+		str = "(null)";
 	while (*str)
 		count += _putchar(*str++);
 	return (count);
@@ -73,7 +73,7 @@ int _printf(const char *format, ...)
 	if (!format)
 		return (-1);
 
-	va_star(args, format);
+	va_start(args, format);
 
 	while (format && format[i])
 	{
