@@ -5,12 +5,13 @@
 #include <unistd.h>
 #include <stdio.h>
 
+
 int _printf(const char *format, ...);
 int _putchar(char c);
 
-/* Helper functions to print chars, strings and percent */
+
+/* Helper functions to help function print char, string and pecentage */
 int print_char(va_list args);
 int print_string(va_list args);
-int handle_format(const char *format, va_list args, int *i);
 
 #endif /* MAIN_H */
