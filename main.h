@@ -8,8 +8,8 @@ int _printf(const char *format, ...);
 int _putchar(char c);
 
 /* Helper functions to print chars, strings and percent */
-int handle_char(char c);
-int handle_string(char *str);
-int handle_percent(void);
+int print_char(va_list args);
+int print_string(va_list args);
+int handle_format(const char *format, va_list args, int *i);
 
 #endif /* MAIN_H */
