@@ -4,8 +4,9 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib>
 
-
+/* Task 0 _printf function */
 int _printf(const char *format, ...);
 int _putchar(char c);
 
