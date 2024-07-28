@@ -1,75 +1,61 @@
 #include "main.h"
 
 /**
- * print_char - Prints a character.
- * @args: Argument list containing the character
- * Return: Number of character.
- */
-int print_char(va_list args)
-{
-	char c = (char) va_arg(args, int);
-
-	return (_putchar(c));
-}
-
-/**
- * print_string - Printss a string
- * @args: Argument list containing the string.
- * Return: Number of characters printed
- */
-int print_string(va_list args)
-{
-	int count = 0;
-	char *str = va_arg(args, char *);
-
-	if (!str)
-		str = "(null)";
-
-	while (*str)
-	{
-		count += _putchar(*str);
-		str++;
-	}
-	return (count);
-}
-/**
  * _printf - Produces output according to a format.
- * @format: Character string containing the format.
- * Return: Number of characters printed (excluding null byte)
+ * @format: Characternstring composed of zero or more directives.
+ * Return: The number of characters printed (excluding null byte).
  */
 int _printf(const char *format, ...)
 {
 	va_list args;
-	int count = 0;
-	int i;
-
-	va_start(args, format);
+	int i = 0, count = 0;
+	char ch;
+	char *str;
 
 	if (!format)
 		return (-1);
 
-	for (i = 0; format[i] != '\0'; i++)
+	va_start(args, format);
+	while (format && format[i])
 	{
 		if (format[i] == '%')
 		{
 			i++;
-			if (format[i] == '\0')
-				break;
-			if (format[i] == 'c')
-				count += print_char(args);
-			else if (format[i] == 's')
-				count += print_string(args);
-			else if (format[i] == '%')
-				count += _putchar('%');
-			else
+			switch (format[i])
 			{
-				count += _putchar('%');
+				case 'c':
+					ch = (char)va_arg(args, int);
+					write(1, &ch, 1);
+					count++;
+					break;
+				case 's':
+					str = va_arg(args, char *);
+
+					if (!str)
+						str = "(null)";
+					while (*str)
+					{
+						write(1, str++, 1);
+						count++;
+					}
+					break;
+				case '%':
+					write(1, "%", 1);
+					count++;
+					break;
+				default:
+					write(1, &format[i - 1], 1);
+					write(1, &format[i], 1);
+					count += 2;
+					break;
 			}
 		}
 		else
 		{
-			count += _putchar(format[i]);
+			write(1, &format[i], 1);
+			count++;
 		}
+		i++;
 	}
 	va_end(args);
 	return (count);
