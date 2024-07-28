@@ -1,62 +1,49 @@
 #include "main.h"
 
 /**
- * _printf - Produces output according to a format.
- * @format: Characternstring composed of zero or more directives.
+ * _printf - Prints output according to a format.
+ * @format: First argument.
+ *
  * Return: The number of characters printed (excluding null byte).
  */
 int _printf(const char *format, ...)
 {
-	va_list args;
-	int i = 0, count = 0;
-	char ch;
-	char *str;
+	int i = 0, j, len = 0, count;
+	va_list valist;
+	types difftypes[] = {{'c', t_char}, {'s', t_string}, {'d', print_number},
+		{'i', print_number},
+	};
 
-	if (!format)
+	if (format == NULL || (format[0] == '%' && format[1] == 0))
 		return (-1);
-
-	va_start(args, format);
-	while (format && format[i])
+	va_start(valist, format);
+	while (format != NULL && format[i])
 	{
-		if (format[i] == '%')
-		{
-			i++;
-			switch (format[i])
-			{
-				case 'c':
-					ch = (char)va_arg(args, int);
-					write(1, &ch, 1);
-					count++;
-					break;
-				case 's':
-					str = va_arg(args, char *);
-
-					if (!str)
-						str = "(null)";
-					while (*str)
-					{
-						write(1, str++, 1);
-						count++;
-					}
-					break;
-				case '%':
-					write(1, "%", 1);
-					count++;
-					break;
-				default:
-					write(1, &format[i - 1], 1);
-					write(1, &format[i], 1);
-					count += 2;
-					break;
-			}
-		}
+		if (format[i] != '%')
+			len += _putchar(format[i]);
 		else
 		{
-			write(1, &format[i], 1);
-			count++;
-		}
-		i++;
-	}
-	va_end(args);
-	return (count);
+			i++;
+			if (format[i] == '%')
+				len += _putchar('%');
+			j = 0;
+			count = 0;
+
+			while (j < 4)
+			{
+				if (format[i] == difftypes[j].t)
+				{
+					len += difftypes[j].f(valist);
+					count = 1;
+					break; }
+				j++; }
+			if (!count && format[i] != '%')
+			{
+				len++;
+				len++;
+				_putchar('%');
+				_putchar(format[i]); }}
+		i++; }
+	va_end(valist);
+	return (len);
 }
