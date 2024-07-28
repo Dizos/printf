@@ -1,49 +1,38 @@
 #include "main.h"
+#include <stdarg.h>
+#include <unistd.h>
 
 /**
- * _printf - Prints output according to a format.
- * @format: First argument.
+ * _printf - Custom printf function
+ * @format: Format string
  *
- * Return: The number of characters printed (excluding null byte).
+ * Return: Number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	int i = 0, j, len = 0, count;
-	va_list valist;
-	types difftypes[] = {{'c', t_char}, {'s', t_string}, {'d', print_number},
-		{'i', print_number}, {'b', binary},
-	};
+    va_list args;
+    int i = 0, count = 0;
 
-	if (format == NULL || (format[0] == '%' && format[1] == 0))
-		return (-1);
-	va_start(valist, format);
-	while (format != NULL && format[i])
-	{
-		if (format[i] != '%')
-			len += _putchar(format[i]);
-		else
-		{
-			i++;
-			if (format[i] == '%')
-				len += _putchar('%');
-			j = 0;
-			count = 0;
+    if (!format)
+        return (-1);
 
-			while (j < 5)
-			{
-				if (format[i] == difftypes[j].t)
-				{
-					len += difftypes[j].f(valist);
-					count = 1;
-					break; }
-				j++; }
-			if (!count && format[i] != '%')
-			{
-				len++;
-				len++;
-				_putchar('%');
-				_putchar(format[i]); }}
-		i++; }
-	va_end(valist);
-	return (len);
+    va_start(args, format);
+
+    while (format && format[i])
+    {
+        if (format[i] == '%' && (format[i + 1] == 'd' || format[i + 1] == 'i'))
+        {
+            count += print_number(va_arg(args, int));
+            i++;
+        }
+        else
+        {
+            write(1, &format[i], 1);
+            count++;
+        }
+        i++;
+    }
+
+    va_end(args);
+    return (count);
 }
