@@ -26,7 +26,7 @@ int _printf(const char *format, ...);
 int t_char(va_list va);
 int t_string(va_list va);
 int print_number(va_list va);
-
+int binary(va_list va);
 
 
 
