@@ -15,10 +15,6 @@
  * @t: The operator
  * @f: The function associated
  */
-int _printf(const char *format, ...);
-int print_number(int n);
-
-
 typedef struct types_arguments
 {
 	char t;
