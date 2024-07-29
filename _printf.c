@@ -12,7 +12,7 @@ int _printf(const char *format, ...)
 	va_list valist;
 	types difftypes[] = {{'c', t_char}, {'s', t_string}, {'d', print_number},
 		{'i', print_number}, {'b', binary}, {'u', print_unsigned},
-		{'x', hexa}, {'X', HEXA}, {'o', octal},
+		{'x', hexa}, {'X', HEXA}, {'o', octal}, {'S', print_S}, {'p', print_p}
 	};
 
 	if (format == NULL || (format[0] == '%' && format[1] == 0))
@@ -30,7 +30,7 @@ int _printf(const char *format, ...)
 			j = 0;
 			count = 0;
 
-			while (j < 9)
+			while (j < 11)
 			{
 				if (format[i] == difftypes[j].t)
 				{

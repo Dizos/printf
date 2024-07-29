@@ -31,8 +31,10 @@ int hexa(va_list va);
 int HEXA(va_list va);
 int octal(va_list va);
 int print_unsigned(va_list va);
-
-
+int print_S(va_list va);
+int print_p(va_list va);
+/*int handle_format(const char *format, va_list valist) */
+/* void write_buffer(char *buffer, int *buffer_len); */
 
 
 #endif /* MAIN_H */
