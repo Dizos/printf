@@ -26,7 +26,11 @@ int _printf(const char *format, ...)
 		{
 			i++;
 			if (format[i] == '%')
+			{
 				len += _putchar('%');
+			}
+			else
+			{
 			j = 0;
 			count = 0;
 
@@ -38,12 +42,10 @@ int _printf(const char *format, ...)
 					count = 1;
 					break; }
 				j++; }
-			if (!count && format[i] != '%')
+			if (!count)
 			{
-				len++;
-				len++;
-				_putchar('%');
-				_putchar(format[i]); }}
+				len += _putchar('%');
+				len += _putchar(format[i]); }}}
 		i++; }
 	va_end(valist);
 	return (len);
