@@ -6,7 +6,7 @@
  *
  * Return: The number of characters printed.
  */
-int hexa(va_list va)
+int hexa(va_list va, char flags[])
 {
 	unsigned int n = va_arg(va, unsigned int);
 	int len = 0;
@@ -18,6 +18,14 @@ int hexa(va_list va)
 		_putchar('0');
 		return (1);
 	}
+
+	if (flags[2] == 1)
+    {
+        _putchar('0');
+        _putchar('x');
+        len += 2;
+    }
+
 	while (n != 0)
 	{
 		int digit = n % 16;
@@ -38,7 +46,7 @@ int hexa(va_list va)
  *
  * Return: The number of characters printed.
  */
-int HEXA(va_list va)
+int HEXA(va_list va, char flags[])
 {
 	unsigned int n = va_arg(va, unsigned int);
 	int len = 0;
@@ -50,6 +58,15 @@ int HEXA(va_list va)
 		_putchar('0');
 		return (1);
 	}
+
+	if (flags[2] == 1)
+    {
+        _putchar('0');
+        _putchar('X');
+        len += 2;
+    }
+
+
 	while (n != 0)
 	{
 		int digit = n % 16;

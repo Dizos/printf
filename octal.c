@@ -6,7 +6,7 @@
  *
  * Return: The number of characters printed.
  */
-int octal(va_list va)
+int octal(va_list va, char flags[])
 {
 	unsigned int n = va_arg(va, unsigned int);
 	int len = 0;
@@ -18,6 +18,12 @@ int octal(va_list va)
 		_putchar('0');
 		return (1);
 	}
+	 if (flags[2] == 1)
+    {
+        _putchar('0');
+        len++;
+    }
+
 	while (n != 0)
 	{
 		buffer[len++] = (n % 8) + '0';

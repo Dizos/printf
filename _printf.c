@@ -1,4 +1,5 @@
 #include "main.h"
+#include <stdarg.h>
 
 /**
  * _printf - Prints output according to a format.
@@ -8,43 +9,38 @@
  */
 int _printf(const char *format, ...)
 {
-	int i = 0, j, len = 0, count;
 	va_list valist;
+	int i = 0, j, len = 0;
+
 	types difftypes[] = {{'c', t_char}, {'s', t_string}, {'d', print_number},
 		{'i', print_number}, {'b', binary}, {'u', print_unsigned},
 		{'x', hexa}, {'X', HEXA}, {'o', octal}, {'S', print_S}, {'p', print_p}
-	};
+};
 
-	if (format == NULL || (format[0] == '%' && format[1] == 0))
-		return (-1);
+char flags[3] = {0, 0, 0}; /* Flags array: flags[0] for '+', flags[1] for ' ', flags[2] for '#'*/
+
 	va_start(valist, format);
-	while (format != NULL && format[i])
-	{
-		if (format[i] != '%')
-			len += _putchar(format[i]);
-		else
-		{
-			i++;
-			if (format[i] == '%')
-				len += _putchar('%');
-			j = 0;
-			count = 0;
-
-			while (j < 11)
-			{
-				if (format[i] == difftypes[j].t)
-				{
-					len += difftypes[j].f(valist);
-					count = 1;
-					break; }
-				j++; }
-			if (!count && format[i] != '%')
-			{
-				len++;
-				len++;
-				_putchar('%');
-				_putchar(format[i]); }}
-		i++; }
-	va_end(valist);
-	return (len);
+    while (format && format[i])
+    {
+        if (format[i] == '%')
+        {
+            i++;
+            for (j = 0; j < 11; j++)
+            {
+                if (format[i] == difftypes[j].c)
+                {
+                    len += difftypes[j].f(valist, flags);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            _putchar(format[i]);
+            len++;
+        }
+        i++;
+    }
+    va_end(valist);
+    return len;
 }

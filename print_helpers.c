@@ -6,13 +6,17 @@
  *
  * Return: The number of characters printed
  */
-int t_char(va_list va)
+int t_char(va_list va, char flags[])
 {
-	int c;
+    char c;
 
-	c = va_arg(va, int);
-	_putchar(c);
-	return (1);
+    (void)flags; /* This will be used for flags handling in the future */
+
+    c = (char)va_arg(va, int);
+
+    _putchar(c);
+
+    return 1;
 }
 
 /**
@@ -21,21 +25,26 @@ int t_char(va_list va)
  *
  * Return: The number of strings pointed
  */
-int t_string(va_list va)
+int t_string(va_list va, char flags[])
 {
-	int i, j;
-	char n[] = "(null)";
-	char *s = va_arg(va, char *);
+    char *s;
+    int i, len;
 
-	if (s == NULL)
-	{
-		for (i = 0; n[i] != '\0'; i++)
-			_putchar(n[i]);
-		return (6);
-	}
-	for (j = 0; s[j] != '\0'; j++)
-		_putchar(s[j]);
-	return (j);
+    (void)flags; /* This will be used for flags handling in the future */
+
+    s = va_arg(va, char *);
+
+    if (s == NULL)
+        s = "(null)";
+
+    len = 0;
+    for (i = 0; s[i] != '\0'; i++)
+    {
+        _putchar(s[i]);
+        len++;
+    }
+
+    return len;
 }
 /**
  * print_number - Prints an integer
@@ -43,46 +52,58 @@ int t_string(va_list va)
  *
  * Return: The number of characters printed.
  */
-int print_number(va_list va)
+int print_number(va_list va, char flags[])
 {
-	int n = va_arg(va, int);
-	int i, len, r, l;
-	unsigned int abs, num, numt;
+    int n = va_arg(va, int);
+    int len = 0;
+    int num = n;
 
-	len = 0;
-	i = 0;
-	r = 1;
-	l = 1;
+    /* Check for '+' flag */
+    if (flags[0] == 1 && n >= 0)
+    {
+        _putchar('+');
+        len++;
+    }
 
-	if (n < 0)
-	{
-		_putchar('-');
-		len++;
-		abs = -n;
-	} else
-	{
-		abs = n;
-	}
-	num = abs;
+    /* Check for ' ' flag */
+    else if (flags[1] == 1 && n >= 0)
+    {
+        _putchar(' ');
+        len++;
+    }
 
-	while (num > 0)
-	{
-		num /= 10;
-		i++;
-	}
-	while (r < i)
-	{
-		l *= 10;
-		r++;
-	}
-	while (l >= 1)
-	{
-		numt = (abs / l) % 10;
-		_putchar(numt + '0');
-		len++;
-		l /= 10;
-	}
-	return (len);
+    /* Handle negative numbers */
+    if (n < 0)
+    {
+        _putchar('-');
+        len++;
+        num = -n;
+    }
+
+    /* Calculate the length and print the number */
+    if (num == 0)
+    {
+        _putchar('0');
+        len++;
+    }
+    else
+    {
+        char str[10];
+        int i = 0;
+        
+        while (num != 0)
+        {
+            str[i++] = (num % 10) + '0';
+            num /= 10;
+        }
+        
+        len += i;
+        while (i > 0)
+        {
+            _putchar(str[--i]);
+        }
+    }
+    return len;
 }
 /**
  * binary - Prints an unsigned int in binary.
@@ -90,27 +111,36 @@ int print_number(va_list va)
  *
  * Return: The number of characters printed.
  */
-int binary(va_list va)
+int binary(va_list va, char flags[])
 {
-	unsigned int c;
-	int i, k;
-	int arr[100];
+    unsigned int n;
+    int len;
+    char bin[32];
+    int i;
 
-	c = va_arg(va, int);
-	i = 0;
+    (void)flags; /* This will be used for flags handling in the future */
 
-	if (c == 0)
-	{
-		_putchar('0');
-		return (1);
-	}
-	while (c > 0)
-	{
-		arr[i] = c % 2;
-		c = c / 2;
-		i++;
-	}
-	for (k = i - 1; k >= 0; k--)
-		_putchar(arr[k] + '0');
-	return (i);
+    n = va_arg(va, unsigned int);
+
+    if (n == 0)
+    {
+        _putchar('0');
+        return 1;
+    }
+
+    len = 0;
+    for (i = 0; n > 0; i++)
+    {
+        bin[i] = (n % 2) + '0';
+        n /= 2;
+    }
+    i--;
+
+    for (; i >= 0; i--)
+    {
+        _putchar(bin[i]);
+        len++;
+    }
+
+    return len;
 }

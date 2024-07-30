@@ -6,26 +6,35 @@
  *
  * Return: The number of characters printed.
  */
-int print_unsigned(va_list va)
+int print_unsigned(va_list va, char flags[])
 {
-	unsigned int n = va_arg(va, unsigned int);
-	int len = 0;
-	int i;
-	char buffer[20];
+    unsigned int n = va_arg(va, unsigned int);
+    unsigned int num = n;
+    char str[10];
+    int i = 0, len = 0;
 
+    (void)flags;  /* This line can be removed if you are planning to use the flags*/
 
-	if (n == 0)
-	{
-		_putchar('0');
-		return (1);
-	}
-	while (n != 0)
-	{
-		buffer[len++] = (n % 10) + '0';
-		n /= 10;
-	}
-	for (i = len - 1; i >= 0; i--)
-		_putchar(buffer[i]);
+    /* Handle 0 separately */
+    if (num == 0)
+    {
+        _putchar('0');
+        return 1;
+    }
 
-	return (len);
+    /* Convert number to string */
+    while (num != 0)
+    {
+        str[i++] = (num % 10) + '0';
+        num /= 10;
+    }
+
+    /* Print the number */
+    len = i;
+    while (i > 0)
+    {
+        _putchar(str[--i]);
+    }
+
+    return len;
 }

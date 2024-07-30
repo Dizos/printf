@@ -6,41 +6,42 @@
  *
  * Return: The number of characters printed
  */
-int print_p(va_list va)
+int print_p(va_list va, char flags[])
 {
-	unsigned long int addr = (unsigned long int)va_arg(va, void *);
-	int len = 0, i = 0, j;
-	char buffer[20];
+    void *p = va_arg(va, void *);
+    unsigned long int addr = (unsigned long int)p;
+    char hex[16];
+    int i, len = 0;
 
-	if (!addr)
-	{
-		return (_printf("(nil)"));
-	}
+    (void)flags; /* This will be used for flags handling in the future */
 
-	buffer[i++] = '0';
-	buffer[i++] = 'x';
-	len += 2;
+    if (p == NULL)
+    {
+        return (_putchar('(') + _putchar('n') + _putchar('i') + _putchar('l') + _putchar(')'));
+    }
 
+    _putchar('0');
+    _putchar('x');
+    len += 2;
 
-	while (addr)
-	{
-		int digit = addr % 16;
+    i = 0;
+    while (addr != 0)
+    {
+        int digit = addr % 16;
 
-		buffer[i++] = (digit < 10) ? (digit + '0') : (digit - 10 + 'a');
-		addr /= 16;
-	}
-	for (j = 2; j < i / 2 + 2; j++)
-	{
-		char tmp = buffer[j];
+        if (digit < 10)
+            hex[i++] = '0' + digit;
+        else
+            hex[i++] = 'a' + (digit - 10);
 
-		buffer[j] = buffer[i - j + 1];
-		buffer[i - j + 1] = tmp;
-	}
+        addr /= 16;
+    }
 
-	for (j = 0; j < i; j++)
-	{
-		_putchar(buffer[j]);
-	}
-	len += i - 2;
-	return (len);
+    len += i;
+    while (i > 0)
+    {
+        _putchar(hex[--i]);
+    }
+
+    return len;
 }
