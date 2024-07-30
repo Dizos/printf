@@ -8,36 +8,41 @@
  */
 int print_p(va_list va)
 {
-	unsigned long int addr = (unsigned long int)va_arg(va, void *);
+	void *addr;
+	unsigned long int decimal, result;
+	char buffer[1024];
+	char hexa[100];
 	int len = 0, i = 0, j;
-	char buffer[20];
+	char *nil = "(nil)";
+
+	addr = va_arg(va, void *);
+	decimal = (unsigned long int)addr;
 
 	if (!addr)
 	{
-		return (_printf("(nil)"));
+		while (nil[len])
+		{
+			buffer[i++] = nil[len++];
+		}
+		write(1, buffer, len);
+		return (len);
 	}
 	buffer[i++] = '0';
 	buffer[i++] = 'x';
 	len += 2;
 
-	while (addr)
+	while (decimal)
 	{
-		int digit = addr % 16;
-
-		buffer[i++] = (digit < 10) ? (digit + '0') : (digit - 10 + 'a');
-		addr /= 16;
+		result = decimal % 16;
+		hexa[len - 2] = (result < 10) ? (result + '0') : (result - 10 + 'a');
+		decimal /= 16;
+		len++;
 	}
-	for (j = 2; j < i / 2 + 2; j++)
+	for (j = 0; j < len - 2; j++)
 	{
-		char tmp = buffer[j];
-
-		buffer[j] = buffer[i - j + 1];
-		buffer[i - j + 1] = tmp;
+		buffer[i++] = hexa[len - 3 - j];
 	}
-	for (j = 0; j < i; j++)
-	{
-		putchar(buffer[j]);
-	}
-	len += i - 2;
-	return (len);
+	write(1, buffer, i);
+	return (i);
 }
+
