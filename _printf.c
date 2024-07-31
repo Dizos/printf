@@ -11,9 +11,11 @@ int _printf(const char *format, ...)
     int i = 0, j, len = 0, count;
     int plus_flag, space_flag, hash_flag;
     va_list valist;
-    types difftypes[] = {{'c', t_char}, {'s', t_string}, {'d', print_number},
-                         {'i', print_number}, {'b', binary}, {'u', print_unsigned},
-                         {'x', hexa}, {'X', HEXA}, {'o', octal}, {'S', print_S}, {'p', print_p}};
+    types difftypes[] = {
+        {'c', t_char}, {'s', t_string}, {'d', print_number},
+        {'i', print_number}, {'b', binary}, {'u', print_unsigned},
+        {'x', hexa}, {'X', HEXA}, {'o', octal}, {'S', print_S}, {'p', print_p}
+    };
 
     if (format == NULL || (format[0] == '%' && format[1] == 0))
         return (-1);
@@ -30,8 +32,7 @@ int _printf(const char *format, ...)
         {
             i++;
             plus_flag = space_flag = hash_flag = 0;
-
-            while (format[i] == '+' || format[i] == ' ' || format[i] == '#')
+	    while (format[i] == '+' || format[i] == ' ' || format[i] == '#')
             {
                 if (format[i] == '+')
                     plus_flag = 1;
@@ -51,6 +52,7 @@ int _printf(const char *format, ...)
                 j = 0;
                 count = 0;
 
+                
                 while (j < 11)
                 {
                     if (format[i] == difftypes[j].t)
