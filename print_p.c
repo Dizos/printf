@@ -9,37 +9,46 @@
  *
  * Return: The number of characters printed
  */
-int print_p(va_list va, int plus_flag, int space_flag, int hash_flag, char length_modifier)
+int print_p(va_list va, int plus_flag, int space_flag, int hash_flag)
 {
-    void *ptr;
-    unsigned long int addr;
-    int len = 0;
+    void *addr;
+    unsigned long int decimal, result;
+    char buffer[1024];
+    char hexa[100];
+    int len = 0, i = 0, j;
+    char *nil = "(nil)";
 
     (void)plus_flag;
     (void)space_flag;
     (void)hash_flag;
-    (void)length_modifier;
-    ptr = va_arg(va, void *);
-    addr = (unsigned long int)ptr;
 
-    len += _putchar('0');
-    len += _putchar('x');
-    /* Print the address in hexadecimal*/
-    if (addr == 0)
-        len += _putchar('0');
-    else
+    addr = va_arg(va, void *);
+    decimal = (unsigned long int)addr;
+
+    if (!addr)
     {
-        char hex_digits[] = "0123456789abcdef";
-        char buffer[16];
-        int i = 0;
-        while (addr)
+        while (nil[len])
         {
-            buffer[i++] = hex_digits[addr % 16];
-            addr /= 16;
+            buffer[i++] = nil[len++];
         }
-        while (i--)
-            len += _putchar(buffer[i]);
+        write(1, buffer, len);
+        return (len);
     }
+    buffer[i++] = '0';
+    buffer[i++] = 'x';
+    len += 2;
 
-    return len;
+    while (decimal)
+    {
+        result = decimal % 16;
+        hexa[len - 2] = (result < 10) ? (result + '0') : (result - 10 + 'a');
+        decimal /= 16;
+        len++;
+    }
+    for (j = 0; j < len - 2; j++)
+    {
+        buffer[i++] = hexa[len - 3 - j];
+    }
+    write(1, buffer, i);
+    return (i);
 }

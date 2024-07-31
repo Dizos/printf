@@ -9,33 +9,41 @@
  *
  * Return: The number of characters printed.
  */
-int hexa(va_list va, int plus_flag, int space_flag, int hash_flag, char length_modifier)
+int hexa(va_list va, int plus_flag, int space_flag, int hash_flag)
 {
-    unsigned long int n;
+    unsigned int n = va_arg(va, unsigned int);
     int len = 0;
-    char buffer[16];
-    int i = 0;
-    char hex_digits[] = "0123456789abcdef";
+    char buffer[20];
+    int i;
 
     (void)plus_flag;
     (void)space_flag;
-    (void)hash_flag;
-    (void)length_modifier;
-    n = va_arg(va, unsigned int);
 
     if (n == 0)
-        return _putchar('0');
-
-    while (n)
     {
-        buffer[i++] = hex_digits[n % 16];
-        n /= 16;
+        _putchar('0');
+        return (1);
     }
 
-    while (i--)
-        len += _putchar(buffer[i]);
+    if (hash_flag)
+    {
+        _putchar('0');
+        _putchar('x');
+        len += 2;
+    }
 
-    return len;
+    while (n != 0)
+    {
+        int digit = n % 16;
+
+        buffer[len++] = (digit < 10) ? (digit + '0') : (digit - 10 + 'a');
+
+        n /= 16;
+    }
+    for (i = len - 1; i >= 0; i--)
+        _putchar(buffer[i]);
+
+    return (len);
 }
 
 /**
@@ -47,31 +55,39 @@ int hexa(va_list va, int plus_flag, int space_flag, int hash_flag, char length_m
  *
  * Return: The number of characters printed.
  */
-int HEXA(va_list va, int plus_flag, int space_flag, int hash_flag, char length_modifier)
+int HEXA(va_list va, int plus_flag, int space_flag, int hash_flag)
 {
-    unsigned long int n;
+    unsigned int n = va_arg(va, unsigned int);
     int len = 0;
-    char buffer[16];
-    int i = 0;
-    char hex_digits[] = "0123456789ABCDEF";
+    char buffer[20];
+    int i;
 
     (void)plus_flag;
     (void)space_flag;
-    (void)hash_flag;
-    (void)length_modifier;
-    n = va_arg(va, unsigned int);
 
     if (n == 0)
-        return _putchar('0');
-
-    while (n)
     {
-        buffer[i++] = hex_digits[n % 16];
-        n /= 16;
+        _putchar('0');
+        return (1);
     }
 
-    while (i--)
-        len += _putchar(buffer[i]);
+    if (hash_flag)
+    {
+        _putchar('0');
+        _putchar('X');
+        len += 2;
+    }
 
-    return len;
+    while (n != 0)
+    {
+        int digit = n % 16;
+
+        buffer[len++] = (digit < 10) ? (digit + '0') : (digit - 10 + 'A');
+
+        n /= 16;
+    }
+    for (i = len - 1; i >= 0; i--)
+        _putchar(buffer[i]);
+
+    return (len);
 }

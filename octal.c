@@ -9,30 +9,35 @@
  *
  * Return: The number of characters printed.
  */
-int octal(va_list va, int plus_flag, int space_flag, int hash_flag, char length_modifier)
+int octal(va_list va, int plus_flag, int space_flag, int hash_flag)
 {
-    unsigned long int n;
+    unsigned int n = va_arg(va, unsigned int);
     int len = 0;
-    char buffer[22];
-    int i = 0;
+    char buffer[20];
+    int i;
 
     (void)plus_flag;
     (void)space_flag;
-    (void)hash_flag;
-    (void)length_modifier;
-    n = va_arg(va, unsigned int);
 
     if (n == 0)
-        return _putchar('0');
-
-    while (n)
     {
-        buffer[i++] = (n % 8) + '0';
-        n /= 8;
+        _putchar('0');
+        return (1);
     }
 
-    while (i--)
-        len += _putchar(buffer[i]);
+    if (hash_flag)
+    {
+        _putchar('0');
+        len++;
+    }
 
-    return len;
+    while (n != 0)
+    {
+        buffer[len++] = (n % 8) + '0';
+        n /= 8;
+    }
+    for (i = len - 1; i >= 0; i--)
+        _putchar(buffer[i]);
+
+    return (len);
 }
