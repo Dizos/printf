@@ -6,35 +6,32 @@
  *
  * Return: The number of characters printed
  */
-int print_S(va_list va, int plus_flag, int space_flag, int hash_flag)
+int print_S(va_list va, int plus_flag, int space_flag, int hash_flag, char length_modifier)
 {
-    char *s = va_arg(va, char *);
+    char *s;
     int i, len = 0;
-    char hex[3];
 
     (void)plus_flag;
     (void)space_flag;
     (void)hash_flag;
+    (void)length_modifier;
+    s = va_arg(va, char *);
 
-    if (s == NULL)
+    if (!s)
         s = "(null)";
-
-    for (i = 0; s[i] != '\0'; i++)
+    for (i = 0; s[i]; i++)
     {
-        if ((s[i] > 0 && s[i] < 32) || s[i] >= 127)
+        if (s[i] < 32 || s[i] >= 127)
         {
-            _putchar('\\');
-            _putchar('x');
-            sprintf(hex, "%02X", (unsigned char)s[i]);
-            _putchar(hex[0]);
-            _putchar(hex[1]);
-            len += 4;
+            len += _putchar('\\');
+            len += _putchar('x');
+            len += _putchar("0123456789ABCDEF"[(s[i] >> 4) & 0xF]);
+            len += _putchar("0123456789ABCDEF"[s[i] & 0xF]);
         }
         else
         {
-            _putchar(s[i]);
-            len++;
+            len += _putchar(s[i]);
         }
     }
-    return (len);
+    return len;
 }
