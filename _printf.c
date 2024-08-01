@@ -12,41 +12,26 @@ int _printf(const char *format, ...)
 	va_list valist;
 	types difftypes[] = {{'c', t_char}, {'s', t_string}, {'d', print_number},
 		{'i', print_number}, {'b', binary}, {'u', print_unsigned},
-		{'x', hexa}, {'X', HEXA}, {'o', octal}, {'S', print_S}, {'p', print_p}
+		{'x', hexa}, {'X', HEXA}, {'o', octal}, {'S', print_S}, {'p', print_p},
+		{'r', print_reversed}, {'R', print_rot13}
 	};
 
-	if (format == NULL || (format[0] == '%' && format[1] == 0))
+	if (!format || (format[0] == '%' && !format[1]))
 		return (-1);
-	va_start(valist, format);
-	while (format != NULL && format[i])
+	va_start(args, format);
+	while (*format)
 	{
-		if (format[i] != '%')
-			len += _putchar(format[i]);
+		if (format == '%')
+		{
+			format++;
+			len += handle_conversion(&format, args, difftypes);
+		}
 		else
 		{
-			i++;
-			if (format[i] == '%')
-			{
-				len += _putchar('%');
-			}
-			else
-			{
-			j = 0;
-			count = 0;
-
-			while (j < 11)
-			{
-				if (format[i] == difftypes[j].t)
-				{
-					len += difftypes[j].f(valist);
-					count = 1;
-					break; }
-				j++; }
-			if (!count)
-			{
-				len += _putchar('%');
-				len += _putchar(format[i]); }}}
-		i++; }
-	va_end(valist);
+			len += _putchar(*format);
+			format+=;
+		}
+	}
+	va_end(args);
 	return (len);
 }
