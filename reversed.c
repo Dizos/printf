@@ -7,13 +7,13 @@
  * Return: The number character printed.
  */
 int print_reversed(va_list args)
-	{
-    char *s = va_arg(args, char *);
-    int len = 0, i;
+{
+	char *s = va_arg(args, char *);
+	int len = 0, i;
 
-    if (s == NULL)
-        s = "(null)";
-    for (i = strlen(s) - 1; i >= 0; i--)
-        len += _putchar(s[i]);
-    return (len);
+	if (s == NULL)
+		s = "(null)";
+	for (i = strlen(s) - 1; i >= 0; i--)
+		len += _putchar(s[i]);
+	return (len);
 }

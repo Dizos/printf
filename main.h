@@ -35,12 +35,26 @@ int print_S(va_list va, int flags, int width, int precision, int length);
 int print_p(va_list va, int flags, int width, int precision, int length);
 int print_reversed(va_list, int flags, int width, int precision, int length);
 int print_rot13(va_list va, int flags, int width, int precision, int length);
-
+int convert_to_hex(unsigned int n, char buffer[], char base_char);
+void handle_padding(char buffer[], int *len, int flags, int width,
+		int precision);
+int handle_null_pointer(char buffer[]);
+int convert_ptr_to_hex(unsigned long int decimal, char hexa[]);
+int handle_non_printable_char(unsigned char c);
+int apply_padding(int len, int width, int flags);
+int apply_unsigned_padding(int len, int width, int flags, int zero_pad);
+int apply_unsigned_precision(int len, int precision);
+int get_digit_count(unsigned int num);
+void print_digit(unsigned int num);
+void handle_sign_and_padding(int n, int *len, int flags, int width,
+		int num_digits);
+/* int print_rot13(va_list args); */
+/* int print_reversed(va_list args); */
 
 int parse_flags(const char **format);
 int parse_width(const char **format, va_list args);
 int parse_precision(const char **format, va_list args);
 int parse_lenth(const char **format);
-int handle_conversion(const char **format, va list args, types *difftypes);
+int handle_conversion(const char **format, va_list args, types *difftypes);
 
 #endif /* MAIN_H */
