@@ -8,6 +8,7 @@
 #include <string.h>
 #include <limits.h>
 
+
 /**
  * struct types_arguments - struct op
  *
@@ -16,22 +17,21 @@
  */
 typedef struct types_arguments
 {
-    char t;
-    int (*f)(va_list va, int plus_flag, int space_flag, int hash_flag);
+	char t;
+	int (*f)(va_list va);
 } types;
 
 int _putchar(char c);
 int _printf(const char *format, ...);
-int t_char(va_list va, int plus_flag, int space_flag, int hash_flag);
-int t_string(va_list va, int plus_flag, int space_flag, int hash_flag);
-int print_number(va_list va, int plus_flag, int space_flag, int hash_flag);
-int binary(va_list va, int plus_flag, int space_flag, int hash_flag);
-int hexa(va_list va, int plus_flag, int space_flag, int hash_flag);
-int HEXA(va_list va, int plus_flag, int space_flag, int hash_flag);
-int octal(va_list va, int plus_flag, int space_flag, int hash_flag);
-int print_unsigned(va_list va, int plus_flag, int space_flag, int hash_flag);
-int print_S(va_list va, int plus_flag, int space_flag, int hash_flag);
-int print_p(va_list va, int plus_flag, int space_flag, int hash_flag);
-int print_unsigned_helper(unsigned int n);
+int t_char(va_list va);
+int t_string(va_list va);
+int print_number(va_list va);
+int binary(va_list va);
+int hexa(va_list va);
+int HEXA(va_list va);
+int octal(va_list va);
+int print_unsigned(va_list va);
+int print_S(va_list va);
+int print_p(va_list va);
 
 #endif /* MAIN_H */

@@ -3,91 +3,63 @@
 /**
  * hexa - Prints an unsigned integer in hexadecimal(lowercase)
  * @va: The unsigned int to print.
- * @plus_flag: Unused
- * @space_flag: Unused
- * @hash_flag: If set, print '0x' prefix
  *
  * Return: The number of characters printed.
  */
-int hexa(va_list va, int plus_flag, int space_flag, int hash_flag)
+int hexa(va_list va)
 {
-    unsigned int n = va_arg(va, unsigned int);
-    int len = 0;
-    char buffer[20];
-    int i;
+	unsigned int n = va_arg(va, unsigned int);
+	int len = 0;
+	char buffer[20];
+	int i;
 
-    (void)plus_flag;
-    (void)space_flag;
+	if (n == 0)
+	{
+		_putchar('0');
+		return (1);
+	}
+	while (n != 0)
+	{
+		int digit = n % 16;
 
-    if (n == 0)
-    {
-        _putchar('0');
-        return (1);
-    }
+		buffer[len++] = (digit < 10) ? (digit + '0') : (digit - 10 + 'a');
 
-    if (hash_flag)
-    {
-        _putchar('0');
-        _putchar('x');
-        len += 2;
-    }
+		n /= 16;
+	}
+	for (i = len - 1; i >= 0; i--)
+		_putchar(buffer[i]);
 
-    while (n != 0)
-    {
-        int digit = n % 16;
-
-        buffer[len++] = (digit < 10) ? (digit + '0') : (digit - 10 + 'a');
-
-        n /= 16;
-    }
-    for (i = len - 1; i >= 0; i--)
-        _putchar(buffer[i]);
-
-    return (len);
+	return (len);
 }
 
 /**
  * HEXA - prints an unsigned inteeger in hexadecimal(uppercase)
  * @va: The unsigned int to print
- * @plus_flag: Unused
- * @space_flag: Unused
- * @hash_flag: If set, print '0X' prefix
  *
  * Return: The number of characters printed.
  */
-int HEXA(va_list va, int plus_flag, int space_flag, int hash_flag)
+int HEXA(va_list va)
 {
-    unsigned int n = va_arg(va, unsigned int);
-    int len = 0;
-    char buffer[20];
-    int i;
+	unsigned int n = va_arg(va, unsigned int);
+	int len = 0;
+	char buffer[20];
+	int i;
 
-    (void)plus_flag;
-    (void)space_flag;
+	if (n == 0)
+	{
+		_putchar('0');
+		return (1);
+	}
+	while (n != 0)
+	{
+		int digit = n % 16;
 
-    if (n == 0)
-    {
-        _putchar('0');
-        return (1);
-    }
+		buffer[len++] = (digit < 10) ? (digit + '0') : (digit - 10 + 'A');
 
-    if (hash_flag)
-    {
-        _putchar('0');
-        _putchar('X');
-        len += 2;
-    }
+		n /= 16;
+	}
+	for (i = len - 1; i >= 0; i--)
+		_putchar(buffer[i]);
 
-    while (n != 0)
-    {
-        int digit = n % 16;
-
-        buffer[len++] = (digit < 10) ? (digit + '0') : (digit - 10 + 'A');
-
-        n /= 16;
-    }
-    for (i = len - 1; i >= 0; i--)
-        _putchar(buffer[i]);
-
-    return (len);
+	return (len);
 }
